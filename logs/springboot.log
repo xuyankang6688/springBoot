@@ -1,0 +1,102 @@
+2020-06-08 14:41:07,985 INFO (StartupInfoLogger.java:50)- Starting Application on PT-台式 with PID 7740 (started by win10 in D:\运宝app资料\yunbao)
+2020-06-08 14:41:07,994 DEBUG (StartupInfoLogger.java:53)- Running with Spring Boot v2.0.2.RELEASE, Spring v5.0.6.RELEASE
+2020-06-08 14:41:07,995 INFO (SpringApplication.java:663)- The following profiles are active: dev
+2020-06-08 14:41:10,145 INFO (GuoRedisConfig.java:110)- 初始化 -> [CacheManager RedisCacheManager Start]
+2020-06-08 14:41:10,158 INFO (GuoRedisConfig.java:142)- 初始化 -> [Redis CacheErrorHandler]
+2020-06-08 14:41:12,478 INFO (StartupInfoLogger.java:59)- Started Application in 4.91 seconds (JVM running for 5.555)
+2020-06-08 14:41:12,711 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: SELECT * FROM sys_public_param t WHERE 1 = 1 ORDER BY t.id DESC ; 
+2020-06-08 14:41:12,725 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 
+2020-06-08 14:41:12,754 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 15
+2020-06-08 16:30:47,274 INFO (StartupInfoLogger.java:50)- Starting Application on PT-台式 with PID 16372 (started by win10 in D:\红娘项目资料\matchmaker1.0)
+2020-06-08 16:30:47,277 DEBUG (StartupInfoLogger.java:53)- Running with Spring Boot v2.0.2.RELEASE, Spring v5.0.6.RELEASE
+2020-06-08 16:30:47,279 INFO (SpringApplication.java:663)- The following profiles are active: dev
+2020-06-08 16:30:49,144 INFO (GuoRedisConfig.java:110)- 初始化 -> [CacheManager RedisCacheManager Start]
+2020-06-08 16:30:49,157 INFO (GuoRedisConfig.java:142)- 初始化 -> [Redis CacheErrorHandler]
+2020-06-08 16:30:51,481 INFO (StartupInfoLogger.java:59)- Started Application in 4.66 seconds (JVM running for 5.302)
+2020-06-08 16:30:51,745 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: SELECT * FROM sys_public_param t WHERE 1 = 1 ORDER BY t.id DESC ; 
+2020-06-08 16:30:51,757 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 
+2020-06-08 16:30:51,788 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 15
+2020-06-08 16:33:00,278 INFO (StartupInfoLogger.java:50)- Starting Application on PT-台式 with PID 13416 (started by win10 in D:\红娘项目资料\matchmaker1.0)
+2020-06-08 16:33:00,282 DEBUG (StartupInfoLogger.java:53)- Running with Spring Boot v2.0.2.RELEASE, Spring v5.0.6.RELEASE
+2020-06-08 16:33:00,283 INFO (SpringApplication.java:663)- The following profiles are active: dev
+2020-06-08 16:33:39,884 INFO (StartupInfoLogger.java:50)- Starting Application on PT-台式 with PID 11476 (started by win10 in D:\红娘项目资料\matchmaker1.0)
+2020-06-08 16:33:39,888 DEBUG (StartupInfoLogger.java:53)- Running with Spring Boot v2.0.2.RELEASE, Spring v5.0.6.RELEASE
+2020-06-08 16:33:39,889 INFO (SpringApplication.java:663)- The following profiles are active: dev
+2020-06-08 16:36:31,578 INFO (StartupInfoLogger.java:50)- Starting Application on PT-台式 with PID 7048 (started by win10 in D:\红娘项目资料\matchmaker1.0)
+2020-06-08 16:36:31,582 DEBUG (StartupInfoLogger.java:53)- Running with Spring Boot v2.0.2.RELEASE, Spring v5.0.6.RELEASE
+2020-06-08 16:36:31,584 INFO (SpringApplication.java:663)- The following profiles are active: dev
+2020-06-08 16:37:21,536 INFO (StartupInfoLogger.java:50)- Starting Application on PT-台式 with PID 1172 (started by win10 in D:\红娘项目资料\matchmaker1.0)
+2020-06-08 16:37:21,539 DEBUG (StartupInfoLogger.java:53)- Running with Spring Boot v2.0.2.RELEASE, Spring v5.0.6.RELEASE
+2020-06-08 16:37:21,540 INFO (SpringApplication.java:663)- The following profiles are active: dev
+2020-06-08 16:37:38,870 INFO (StartupInfoLogger.java:50)- Starting Application on PT-台式 with PID 7756 (started by win10 in D:\红娘项目资料\matchmaker1.0)
+2020-06-08 16:37:38,874 DEBUG (StartupInfoLogger.java:53)- Running with Spring Boot v2.0.2.RELEASE, Spring v5.0.6.RELEASE
+2020-06-08 16:37:38,875 INFO (SpringApplication.java:663)- The following profiles are active: dev
+2020-06-08 16:43:24,054 INFO (StartupInfoLogger.java:50)- Starting Application on PT-台式 with PID 7316 (started by win10 in D:\红娘项目资料\matchmaker1.0)
+2020-06-08 16:43:24,058 DEBUG (StartupInfoLogger.java:53)- Running with Spring Boot v2.0.2.RELEASE, Spring v5.0.6.RELEASE
+2020-06-08 16:43:24,059 INFO (SpringApplication.java:663)- The following profiles are active: dev
+2020-06-08 16:44:03,355 INFO (StartupInfoLogger.java:50)- Starting Application on PT-台式 with PID 8484 (started by win10 in D:\红娘项目资料\matchmaker1.0)
+2020-06-08 16:44:03,359 DEBUG (StartupInfoLogger.java:53)- Running with Spring Boot v2.0.2.RELEASE, Spring v5.0.6.RELEASE
+2020-06-08 16:44:03,360 INFO (SpringApplication.java:663)- The following profiles are active: dev
+2020-06-08 16:44:04,581 INFO (GuoRedisConfig.java:110)- 初始化 -> [CacheManager RedisCacheManager Start]
+2020-06-08 16:44:04,594 INFO (GuoRedisConfig.java:142)- 初始化 -> [Redis CacheErrorHandler]
+2020-06-08 16:44:07,037 INFO (StartupInfoLogger.java:59)- Started Application in 4.106 seconds (JVM running for 4.732)
+2020-06-08 17:05:31,525 INFO (StartupInfoLogger.java:50)- Starting Application on PT-台式 with PID 11776 (started by win10 in D:\红娘项目资料\matchmaker1.0)
+2020-06-08 17:05:31,529 DEBUG (StartupInfoLogger.java:53)- Running with Spring Boot v2.0.2.RELEASE, Spring v5.0.6.RELEASE
+2020-06-08 17:05:31,531 INFO (SpringApplication.java:663)- The following profiles are active: dev
+2020-06-08 17:05:32,764 INFO (GuoRedisConfig.java:110)- 初始化 -> [CacheManager RedisCacheManager Start]
+2020-06-08 17:05:32,778 INFO (GuoRedisConfig.java:142)- 初始化 -> [Redis CacheErrorHandler]
+2020-06-08 17:05:35,167 INFO (StartupInfoLogger.java:59)- Started Application in 4.099 seconds (JVM running for 4.79)
+2020-06-08 17:07:24,607 INFO (StartupInfoLogger.java:50)- Starting Application on PT-台式 with PID 11156 (started by win10 in D:\红娘项目资料\matchmaker1.0)
+2020-06-08 17:07:24,610 DEBUG (StartupInfoLogger.java:53)- Running with Spring Boot v2.0.2.RELEASE, Spring v5.0.6.RELEASE
+2020-06-08 17:07:24,611 INFO (SpringApplication.java:663)- The following profiles are active: dev
+2020-06-08 17:07:25,818 INFO (GuoRedisConfig.java:110)- 初始化 -> [CacheManager RedisCacheManager Start]
+2020-06-08 17:07:25,831 INFO (GuoRedisConfig.java:142)- 初始化 -> [Redis CacheErrorHandler]
+2020-06-08 17:07:28,226 INFO (StartupInfoLogger.java:59)- Started Application in 4.064 seconds (JVM running for 4.726)
+2020-06-08 17:07:58,757 INFO (StartupInfoLogger.java:50)- Starting Application on PT-台式 with PID 12184 (started by win10 in D:\红娘项目资料\matchmaker1.0)
+2020-06-08 17:07:58,761 DEBUG (StartupInfoLogger.java:53)- Running with Spring Boot v2.0.2.RELEASE, Spring v5.0.6.RELEASE
+2020-06-08 17:07:58,763 INFO (SpringApplication.java:663)- The following profiles are active: dev
+2020-06-08 17:08:00,041 INFO (GuoRedisConfig.java:110)- 初始化 -> [CacheManager RedisCacheManager Start]
+2020-06-08 17:08:00,056 INFO (GuoRedisConfig.java:142)- 初始化 -> [Redis CacheErrorHandler]
+2020-06-08 17:08:02,622 INFO (StartupInfoLogger.java:59)- Started Application in 4.325 seconds (JVM running for 5.041)
+2020-06-08 17:08:35,812 INFO (StartupInfoLogger.java:50)- Starting Application on PT-台式 with PID 10936 (started by win10 in D:\红娘项目资料\matchmaker1.0)
+2020-06-08 17:08:35,817 DEBUG (StartupInfoLogger.java:53)- Running with Spring Boot v2.0.2.RELEASE, Spring v5.0.6.RELEASE
+2020-06-08 17:08:35,818 INFO (SpringApplication.java:663)- The following profiles are active: dev
+2020-06-08 17:08:37,112 INFO (GuoRedisConfig.java:110)- 初始化 -> [CacheManager RedisCacheManager Start]
+2020-06-08 17:08:37,125 INFO (GuoRedisConfig.java:142)- 初始化 -> [Redis CacheErrorHandler]
+2020-06-08 17:08:39,528 INFO (StartupInfoLogger.java:59)- Started Application in 4.206 seconds (JVM running for 4.939)
+2020-06-08 17:09:10,684 INFO (StartupInfoLogger.java:50)- Starting Application on PT-台式 with PID 5168 (started by win10 in D:\红娘项目资料\matchmaker1.0)
+2020-06-08 17:09:10,689 DEBUG (StartupInfoLogger.java:53)- Running with Spring Boot v2.0.2.RELEASE, Spring v5.0.6.RELEASE
+2020-06-08 17:09:10,690 INFO (SpringApplication.java:663)- The following profiles are active: dev
+2020-06-08 17:09:11,961 INFO (GuoRedisConfig.java:110)- 初始化 -> [CacheManager RedisCacheManager Start]
+2020-06-08 17:09:11,979 INFO (GuoRedisConfig.java:142)- 初始化 -> [Redis CacheErrorHandler]
+2020-06-08 17:09:14,506 INFO (StartupInfoLogger.java:59)- Started Application in 4.287 seconds (JVM running for 4.988)
+2020-06-08 17:10:17,124 INFO (StartupInfoLogger.java:50)- Starting Application on PT-台式 with PID 12380 (started by win10 in D:\红娘项目资料\matchmaker1.0)
+2020-06-08 17:10:17,129 DEBUG (StartupInfoLogger.java:53)- Running with Spring Boot v2.0.2.RELEASE, Spring v5.0.6.RELEASE
+2020-06-08 17:10:17,131 INFO (SpringApplication.java:663)- The following profiles are active: dev
+2020-06-08 17:10:18,388 INFO (GuoRedisConfig.java:110)- 初始化 -> [CacheManager RedisCacheManager Start]
+2020-06-08 17:10:18,401 INFO (GuoRedisConfig.java:142)- 初始化 -> [Redis CacheErrorHandler]
+2020-06-08 17:10:20,860 INFO (StartupInfoLogger.java:59)- Started Application in 4.169 seconds (JVM running for 4.82)
+2020-06-08 17:11:28,048 INFO (StartupInfoLogger.java:50)- Starting Application on PT-台式 with PID 13424 (started by win10 in D:\红娘项目资料\matchmaker1.0)
+2020-06-08 17:11:28,052 DEBUG (StartupInfoLogger.java:53)- Running with Spring Boot v2.0.2.RELEASE, Spring v5.0.6.RELEASE
+2020-06-08 17:11:28,053 INFO (SpringApplication.java:663)- The following profiles are active: dev
+2020-06-08 17:11:29,230 INFO (GuoRedisConfig.java:110)- 初始化 -> [CacheManager RedisCacheManager Start]
+2020-06-08 17:11:29,243 INFO (GuoRedisConfig.java:142)- 初始化 -> [Redis CacheErrorHandler]
+2020-06-08 17:11:31,745 INFO (StartupInfoLogger.java:59)- Started Application in 4.127 seconds (JVM running for 4.791)
+2020-06-08 17:13:48,966 INFO (StartupInfoLogger.java:50)- Starting Application on PT-台式 with PID 12408 (started by win10 in D:\红娘项目资料\matchmaker1.0)
+2020-06-08 17:13:48,969 DEBUG (StartupInfoLogger.java:53)- Running with Spring Boot v2.0.2.RELEASE, Spring v5.0.6.RELEASE
+2020-06-08 17:13:48,970 INFO (SpringApplication.java:663)- The following profiles are active: dev
+2020-06-08 17:13:50,183 INFO (GuoRedisConfig.java:110)- 初始化 -> [CacheManager RedisCacheManager Start]
+2020-06-08 17:13:50,196 INFO (GuoRedisConfig.java:142)- 初始化 -> [Redis CacheErrorHandler]
+2020-06-08 17:13:52,622 INFO (StartupInfoLogger.java:59)- Started Application in 4.071 seconds (JVM running for 4.751)
+2020-06-08 17:14:28,235 INFO (StartupInfoLogger.java:50)- Starting Application on PT-台式 with PID 14936 (started by win10 in D:\红娘项目资料\matchmaker1.0)
+2020-06-08 17:14:28,238 DEBUG (StartupInfoLogger.java:53)- Running with Spring Boot v2.0.2.RELEASE, Spring v5.0.6.RELEASE
+2020-06-08 17:14:28,240 INFO (SpringApplication.java:663)- The following profiles are active: dev
+2020-06-08 17:14:29,506 INFO (GuoRedisConfig.java:110)- 初始化 -> [CacheManager RedisCacheManager Start]
+2020-06-08 17:14:29,519 INFO (GuoRedisConfig.java:142)- 初始化 -> [Redis CacheErrorHandler]
+2020-06-08 17:14:32,012 INFO (StartupInfoLogger.java:59)- Started Application in 4.198 seconds (JVM running for 4.831)
+2020-06-08 17:15:45,617 INFO (StartupInfoLogger.java:50)- Starting Application on PT-台式 with PID 17020 (started by win10 in D:\红娘项目资料\matchmaker1.0)
+2020-06-08 17:15:45,620 DEBUG (StartupInfoLogger.java:53)- Running with Spring Boot v2.0.2.RELEASE, Spring v5.0.6.RELEASE
+2020-06-08 17:15:45,621 INFO (SpringApplication.java:663)- The following profiles are active: dev
+2020-06-08 17:15:46,830 INFO (GuoRedisConfig.java:110)- 初始化 -> [CacheManager RedisCacheManager Start]
+2020-06-08 17:15:46,844 INFO (GuoRedisConfig.java:142)- 初始化 -> [Redis CacheErrorHandler]
+2020-06-08 17:15:49,599 INFO (StartupInfoLogger.java:59)- Started Application in 4.407 seconds (JVM running for 5.109)
