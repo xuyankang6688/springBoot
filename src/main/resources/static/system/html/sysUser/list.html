@@ -1,0 +1,145 @@
+<!-- 
+	@describe: 用户列表
+	@author: javaGuo 
+	@date: 2018-09-11
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>用户列表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../source/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../source/style/admin.css" media="all">
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="username" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn" lay-submit lay-filter="LAY-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-card-body">
+            <div id="layui-card-body-div-btn" style="padding-bottom: 10px;">
+            </div>
+
+            <table id="LAY-table-list" lay-filter="LAY-table-list"></table>
+            <script type="text/html" id="table-tool-btn"></script>
+        </div>
+    </div>
+</div>
+
+<script src="../../source/layui/layui.js"></script>
+<script src="../../js/javaGuoJs/common.js"></script>
+<script>
+    layui.config({
+        base: '../../source/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'table', 'form'], function () {
+        var $ = layui.$
+            , form = layui.form
+            , table = layui.table
+            , admin = layui.admin
+            , actionUrl = '/system/sysUser/'
+            , roleResourceName = '用户';
+
+        //进入界面成功后可执行的方法，可用于初始化一些数据
+        var successFunction =
+            {
+                addSuccess: function (layero, index) {
+                    successFunction.getRoleInfo('add', layero);
+                },
+                editSuccess: function (layero, index, obj) {
+                    //界面对象，用于获取界面中节点
+                    var $IC = layero.find('iframe').contents();
+                    $IC.find('input[name="id"]').val(obj.data.id);
+                    $IC.find('input[name="username"]').val(obj.data.username);
+                    successFunction.getRoleInfo('edit', layero, obj);
+                },
+                submitBefore: function (layero) {
+                    //界面对象，用于获取界面中节点
+                    var $IC = layero.find('iframe').contents();
+                    var password = $IC.find('input[name="password"]').val()
+                    var username = $IC.find('input[name="username"]').val();
+                    var phone = $IC.find('input[name="phone"]').val();
+                    $IC.find('input[name="password"]').val( hex_md5(password + username) );
+                },
+                getRoleInfo: function (flag, layero, obj) {
+                    //界面对象，用于获取界面中节点
+                    var $IC = layero.find('iframe').contents();
+                    var path = '/system/perRole/selectAll';
+                    var data = {};
+                    if (flag == 'edit') {
+                        path = '/system/perRole/selectRoleWithUserOwnerByUserId';
+                        data = {userId: obj.data.id};
+                    }
+                    admin.req({
+                        url: baseUrl + path
+                        , data: data
+                        , done: function (res) {
+                            if ('0000000' == res.code) {
+                                //<input type="checkbox" name="roleIds" title="系统管理员">
+                                var roleDivTemp = '';
+                                for (var i = 0; i < res.data.list.length; i++) {
+                                    roleDivTemp += '<input type="checkbox" name="roleIds" title="' + res.data.list[i].roleName + '" value="' + res.data.list[i].id + '"';
+                                    if (res.data.list[i].userOwner == '0') roleDivTemp += ' checked="" ';
+                                    roleDivTemp += '> ';
+                                }
+                                $IC.find('#roleDiv').append(roleDivTemp);
+                            } else {
+                                alert(res.msg);
+                            }
+                        }
+                    });
+                }
+            };
+
+        //表格初始化列表json参数
+        var tableRenderJson = {
+            elem: '#LAY-table-list'
+            , url: baseUrl + actionUrl + 'selectAllForLayUI'
+            , headers: paramAddInfo({})
+            , cols: [[
+                {type: 'checkbox', fixed: 'left'}
+                , {
+                    title: '序号', width: 70, templet: function (d) {
+                        return d.LAY_INDEX;
+                    }
+                }
+                , {field: 'username', title: '用户名'}
+                , {field: 'createTime', title: '创建时间', sort: true, totalRow: false}
+                , {field: 'updateTime', title: '修改时间'}
+                , {field: 'phone', title: '手机号'}
+                , {title: '操作', width: 150, align: 'center', fixed: 'right', toolbar: '#table-tool-btn'}
+            ]]
+            , request: {pageName: 'offset', limitName: 'limit'}
+            , text: '对不起，加载出现异常！'
+            , page: true
+        };
+
+        //初始化页面基础功能
+        initPageFunction($, form, table, admin, actionUrl, successFunction, roleResourceName, tableRenderJson);
+
+        //初始化列表数据
+        table.render(tableRenderJson);
+
+    });
+</script>
+</body>
+</html>

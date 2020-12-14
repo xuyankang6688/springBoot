@@ -1,0 +1,229 @@
+<!-- 
+	@describe: 货物表编辑
+	@author:  
+	@date: 2019-12-09 
+-->
+<!DOCTYPE html>
+<head>
+	<meta charset='utf-8'>
+	<title>货物表编辑</title>
+	<meta name='keywords' content=''/>
+	<meta name='description' content='' />
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
+	<meta name='renderer' content='webkit'/>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'/>
+	<link rel='stylesheet' href='../../source/layui/css/layui.css' media='all'/>
+	<script src='../../js/javaGuoJs/jquery.min.js'></script>
+</head>
+
+<body>
+<style type="text/css">
+	table td{
+		border-left: 1px solid #eaeaea;
+		border-top: 1px solid #eaeaea;
+		border-bottom: 1px solid #eaeaea ;
+	}
+	.layui-form-item .layui-input-inline {
+		margin-right: 0px;
+		width: 360px;
+		float: left;
+	}
+	.layui-form-item .layui-form-label {
+		background: #f5f5f5;
+	}
+	.layui-form-select .layui-input{
+		width: 120px;
+	}
+	.layui-form-item .layui-inline {
+		margin-bottom: 5px;
+		margin-right: 0px;
+	}
+</style>
+	<div class='layui-form' style='padding: 20px 0 0 0;'>
+		<input type='hidden' name='id' class='layui-input'>
+		<div>
+		<table class='layui-form-item'  cellspacing = 0px  cellpadding = 10px>
+			<tr>
+				<td class='layui-form-label'>申请人</td>
+				<td class='layui-input-inline'>
+					<input type='text' name='applicant' lay-verify='required' placeholder='请输入申请人' autocomplete='off' class='layui-input'>
+				</td>
+					<td class='layui-form-label'>货物名称</td>
+					<td class='layui-input-inline'>
+						<input type='text' name='goodsName' lay-verify='required' placeholder='请输入货物名称' autocomplete='off' class='layui-input'>
+					</td>
+			</tr>
+		<tr>
+			<td class="layui-form-label">出发地</td>
+			<span>
+			<td class="layui-inline">
+				<select  name="province" id="province" lay-verify="required" lay-search lay-filter="province">
+					<option value="">省份</option>
+				</select>
+			</td>
+			<td class="layui-inline">
+				<select name="city" id="city" lay-verify="required" lay-search lay-filter="city">
+					<option value="">地级市</option>
+				</select>
+			</td>
+			<td class="layui-inline">
+				<select name="district"  id="district" lay-verify="required" lay-search>
+					<option value="">县/区</option>
+				</select>
+			</td>
+			</span>
+		<!--目的地-->
+			<td class="layui-form-label">目的地</td>
+			<td class="layui-inline">
+				<select  name="province1"  id="province1" lay-verify="required" lay-search lay-filter="province1">
+					<option value="">省份</option>
+				</select>
+			</td>
+			<td class="layui-inline">
+				<select name="city1"  id="city1" lay-verify="required" lay-search lay-filter="city1">
+					<option value="">地级市</option>
+				</select>
+			</td>
+			<td class="layui-inline">
+				<select name="district1"  id="district1" lay-verify="required" lay-search>
+					<option value="">县/区</option>
+				</select>
+			</td>
+		</tr>
+<!--
+			<div class="layui-form-item">
+				<label class="layui-form-label">请选择地区</label>
+				<div class="layui-inline">
+					<select name="province" id="province" lay-verify="required" lay-search lay-filter="province">
+						<option value="">省份</option>
+					</select>
+				</div>
+				<div class="layui-inline">
+					<select name="city" id="city" lay-verify="required" lay-search lay-filter="city">
+						<option value="">地级市</option>
+					</select>
+				</div>
+				<div class="layui-inline">
+					<select name="district" id="district" lay-verify="required" lay-search>
+						<option value="">县/区</option>
+					</select>
+				</div>
+			</div>-->
+
+<!--
+		<div class='layui-form-item'>
+			<label class='layui-form-label'>是否开发票</label>
+			<div class='layui-input-inline'>
+				<select id="isInvoice" name="isInvoice" lay-filter="aihao">
+					&lt;!&ndash; （1支付宝、2微信） &ndash;&gt;
+					<option value="">请选择需求/option>
+					<option value="1">是</option>
+					<option value="2">否</option>
+				</select>
+			</div>
+		</div>-->
+		</table>
+		</div>
+		<div class='layui-form-item'>
+			<label class='layui-form-label'>货物商品图片</label>
+			<div class='layui-input-inline' id="">
+				<button type="button" class="layui-btn" id="test2">多图片上传</button>
+				<blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;width:320px;">
+					预览图：
+					<div class="layui-upload-list" id="demo2"></div>
+				</blockquote>
+				<input type='hidden' name='goodsImg' lay-verify='required' placeholder='请输入商品图片' autocomplete='off' class='layui-input'>
+			</div>
+		</div>
+		<div class='layui-form-item'>
+			<label class='layui-form-label'>货主id</label>
+			<div class='layui-input-inline'>
+				<input type='text' name='userId' lay-verify='required' placeholder='请输入货主id' autocomplete='off' class='layui-input'>
+			</div>
+		</div>
+		<div class='layui-form-item layui-hide'>
+			<input type='button' lay-submit lay-filter='LAY-submit' id='LAY-submit' value='确认'>
+		</div>
+	</div>
+	<script src='../../source/layui/layui.js'></script>
+	<script src='../../js/javaGuoJs/common.js'></script>
+	<script src='../../js/javaGuoJs/area.js'></script>
+	<script src='../../js/javaGuoJs/select.js'></script>
+	<script src='../../js/javaGuoJs/select1.js'></script>
+	<script>	layui.use(['upload','form'], function(){
+		var $ = layui.jquery
+				,form = layui.form
+				,upload = layui.upload;
+		//上传图片
+		upload.render({
+			elem: '#upload1'
+			,url: '/upload/uploadFile'
+			,accept:'file'
+			,acceptMime: 'jpg, png'
+			,before: function(obj){
+				//$('#demo1').show();
+				//$('#icon1').hide();
+				closeIndex = layer.load();
+				//预读本地文件示例，不支持ie8
+				obj.preview(function(index, file, result){
+					// $('#demo1').append('< img onclick="queryImg(this)" src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
+					$('#demo1').attr('src',result)
+				}) ;
+			}
+			,done: function(res){
+				//上传完毕
+				$("input[name='goodsImg']").val(res.data.uploadFilePath)
+				layer.close(closeIndex);
+			}
+		});
+		//多图片上传
+		upload.render({
+			elem: '#test2'
+			,url: '/upload/uploadFile'
+			,accept:'file'
+			,acceptMime: 'jpg, png'
+			// ,multiple: true
+			,before: function(obj){
+				closeIndex = layer.load();
+				//预读本地文件示例，不支持ie8
+				obj.preview(function(index, file, result){
+
+				});
+			}
+			,done: function(res){
+				//上传完毕
+				var img = res.data.uploadFilePath + "," + $("input[name='goodsImg']").val();
+				$('#demo2').append('<div style="position:relative;"><img src="'+ res.data.uploadFilePath +'" width="300px" height="200px" class="add-img">'
+						+'<img class="del-icon" src="../../img/b.png" ></img></div>');
+				$("input[name='goodsImg']").val(img);
+				layer.close(closeIndex);
+			}
+		});
+		//通过父级标签选择     控件点击事件
+		$('#demo2').on("click",".del-icon", function(){
+			//删除当前选中的图片
+			$(this).parent().remove();
+		})
+	});
+
+	layui.use(['laydate','form'], function(){
+		var $ = layui.jquery
+				,form = layui.form
+				,laydate = layui.laydate;
+
+		//执行一个laydate实例
+		//装货时间
+		laydate.render({
+			elem: '#loadingTime' //指定元素
+			,type: 'datetime'
+			,done: function(value, date, endDate){
+				lay('#loadingTime').val(value);
+			}
+		});
+	});
+
+
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!-- 
+	@describe: 用户编辑
+	@author: javaGuo 
+	@date: 2018-09-11 
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>用户编辑</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../source/layui/css/layui.css" media="all">
+</head>
+<body>
+<div class="layui-form" style="padding: 20px 0 0 0;">
+    <input type="hidden" name="id" class="layui-input">
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户名</label>
+        <div class="layui-input-inline">
+            <input type="text" name="username" lay-verify="required" placeholder="请输入用户名" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">密码</label>
+        <div class="layui-input-inline">
+            <input type="text" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">手机号</label>
+        <div class="layui-input-inline">
+            <input type="tel" name="phone" placeholder="请输入移动端手机号" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="LAY-submit" id="LAY-submit" value="确认">
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色</label>
+        <div class="layui-input-block" id="roleDiv">
+        </div>
+    </div>
+</div>
+<script src="../../source/layui/layui.js"></script>
+<script>layui.use('form', function () {
+    //list界面渲染动态添加的checkbox渲染不出来，就在这里渲染了
+    setTimeout(function () {
+        layui.form.render();
+    }, 1000);
+})</script>
+</body>
+</html>

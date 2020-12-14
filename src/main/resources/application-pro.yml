@@ -1,0 +1,26 @@
+javaguo:
+  #sql日志打印
+  logging:
+    config: classpath:log/logback/logback-pro.xml
+  application:
+    name: user
+  datasource:
+    url: jdbc:mysql://47.101.135.162:3306/hongpei?useUnicode=true&characterEncoding=utf-8&useSSL=true
+    username: root
+    password: root
+  redis:
+    host: 47.101.135.162
+    port: 6379
+    #如果有密码
+    password: 123456
+  ssl:
+    key-store: classpath:keystore.p12   # 证书名字
+    key-store-password: javaguo        # 密钥库密码
+    key-store-type: PKCS12             # 行业标准PKCS12
+
+  #微信小程序参数
+  wx:
+    miniProgram:
+      customToken: cxqc                           #微信公众平台-小程序客服消息令牌
+      appid: wx81300af14665b6e7                   #微信公众平台-小程序APPID
+      secret: a7ed61c2e93fd3fbd2de866a493a0ff5    #微信公众平台-小程序秘钥

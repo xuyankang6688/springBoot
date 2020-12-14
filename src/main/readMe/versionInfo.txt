@@ -1,0 +1,19 @@
+version: 2.0.0
+    说明:
+        1: application.yml加入线上和测试环境配置属性
+            a: spring.profiles.active: dev/pro(测试/线上)
+            b: 对应文件：application-dev.yml和application-pro.yml
+        2: 加入assembly打包
+            a: 详情请查看src/assembly/bin/readMe.txt
+        3: application.yml加入logback详细配置
+            a：logging.config
+            b: 对应文件：logback-dev.xml和logback-pro.xml
+
+version: 2.0.1
+    说明：
+        1：加入记住密码
+        2：修改common.js中对于localStorage的使用
+        3：加入小程序客服消息功能
+            a: 对应文件：top.javaguo.biz.others.qq.wx
+        4: 封装阿里OSSWEB直传
+            a: 对应文件static.utils.aliOSS

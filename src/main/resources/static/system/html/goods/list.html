@@ -1,0 +1,148 @@
+<!-- 
+	@describe: 货物表列表
+	@author:  
+	@date: 2019-12-09 
+-->
+<!DOCTYPE html>
+<head>
+	<meta charset='utf-8'>
+	<title>货物表列表</title>
+	<meta name='keywords' content=''/>
+	<meta name='description' content=''/>
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
+	<meta name='renderer' content='webkit'/>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'/>
+	<link rel='stylesheet' href='../../source/layui/css/layui.css' media='all'/>
+	<link rel='stylesheet' href='../../source/style/admin.css' media='all'/>
+</head>
+
+<body>
+	<div class='layui-fluid'>
+		<div class='layui-card'>
+			<div class='layui-form layui-card-header layuiadmin-card-header-auto'>
+				<div class='layui-form-item'>
+
+
+					<div class='layui-inline'>
+						<label class='layui-form-label'>货主id</label>
+						<div class='layui-input-block'>
+							<input type='text' name='userId' placeholder='请输入' autocomplete='off' class='layui-input'>
+						</div>
+					</div>
+					<div class='layui-inline'>
+						<button class='layui-btn layuiadmin-btn' lay-submit lay-filter='LAY-search'>
+							<i class='layui-icon layui-icon-search layuiadmin-button-btn'></i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class='layui-card-body'>
+			<div id='layui-card-body-div-btn' style='padding-bottom: 10px;'></div>
+			<table id='LAY-table-list' lay-filter='LAY-table-list'></table>
+			<script type='text/html' id='table-tool-btn'></script>
+		</div>
+	</div>
+	<script src='../../source/layui/layui.js'></script>
+	<script src='../../js/javaGuoJs/common.js'></script>
+	<script>
+		layui.config({
+			base: '../../source/' //静态资源所在路径
+		}).extend({
+			index: 'lib/index' //主入口模块
+		}).use(['index' , 'table' , 'form'], function(){
+			var $ = layui.$
+			,form = layui.form
+			,table = layui.table
+			,admin = layui.admin
+			,actionUrl = '/system/goods/'
+			,roleResourceName = '货物列表';
+
+			//进入界面成功后可执行的方法，可用于初始化一些数据
+			var successFunction = 
+			{
+				addSuccess: function(layero, index){
+				},
+				editSuccess: function(layero, index , obj){
+					//界面对象，用于获取界面中节点
+					var $IC = layero.find('iframe').contents();
+					$IC.find('input[name="id"]').val(obj.data.id);
+					$IC.find('input[name="isDeleted"]').val(obj.data.isDeleted);
+					$IC.find('input[name="applicant"]').val(obj.data.applicant);
+					$IC.find('input[name="departLocal"]').val(obj.data.departLocal);
+					$IC.find('input[name="destination"]').val(obj.data.destination);
+					$IC.find('input[name="loadingTime"]').val(obj.data.loadingTime);
+					$IC.find('input[name="goodsName"]').val(obj.data.goodsName);
+					$IC.find('input[name="goodsWeight"]').val(obj.data.goodsWeight);
+					$IC.find('input[name="width"]').val(obj.data.width);
+					$IC.find('input[name="height"]').val(obj.data.height);
+					$IC.find('input[name="length"]').val(obj.data.length);
+					var str = obj.data.goodsImg;
+					var strs= new Array(); //定义一数组
+					strs=str.split(","); //字符分割
+					for (i=0;i<strs.length ;i++ ){
+						if(strs[i])
+							$IC.find('#demo2').append('<div style="position:relative;"><img src="'+ strs[i] +'" width="300px" height="200px" class="add-img">'
+									+'<img class="del-icon" src="../../img/b.png" ></img></div>')
+					}
+					$IC.find('input[name="goodsImg"]').val(obj.data.goodsImg);
+
+					$IC.find('input[name="vehicleDemand"]').val(obj.data.vehicleDemand);
+					$IC.find('#isCarpooling').val(obj.data.isCarpooling);
+					$IC.find('#isInvoice').val(obj.data.isInvoice);
+					$IC.find('input[name="userId"]').val(obj.data.userId);
+				},
+				submitBefore: function(layero){
+				}
+			};
+
+			//表格初始化列表json参数
+			var tableRenderJson = {
+				elem: '#LAY-table-list'
+				,url:  baseUrl  + actionUrl + 'selectAllForLayUI'
+				,where : paramAddInfo({})
+				,cols: [[
+					{type: 'checkbox', fixed: 'left'}
+					,{title: '序号', width:70 , templet : function(d){return d.LAY_INDEX;}}
+					,{field: 'userName', title: '发布人'}
+					,{field: 'type', title: '类型',templet:function(d){
+							//（货物状态1正常，2已过期，3已签约）
+							if(d.type == "1"){
+								return "个人";
+							}else if(d.type == "2"){
+								return "车队";
+							}else if(d.type == "3"){
+								return "企业";
+							}
+						}}
+					,{field: 'applicant', title: '姓名'}
+					,{field: 'phone', title: '电话'}
+					,{field: 'goodsName', title: '货物名称'}
+					,{field: 'departLocal', title: '出发地'}
+					,{field: 'destination', title: '目的地'}
+					,{field: 'loadingTime', title: '装货时间'}
+					,{field: 'goodsStatus', title: '货物状态',templet:function(d){
+							//（货物状态1正常，2已过期，3已签约）
+							if(d.goodsStatus == "1"){
+								return "正常";
+							}else if(d.goodsStatus == "2"){
+								return "已过期";
+							}else if(d.goodsStatus == "3"){
+								return "已签约";
+							}
+						}}
+					,{title: '操作', width: 150, align:'center', fixed: 'right', toolbar: '#table-tool-btn'}
+				]]
+				,request : {pageName: 'offset',limitName: 'limit'}
+				,page: true
+			};
+
+			//初始化页面基础功能
+			initPageFunction($ , form , table , admin , actionUrl , successFunction , roleResourceName , tableRenderJson);
+
+			//初始化列表数据
+			table.render(tableRenderJson);
+		});
+	</script>
+</body>
+</html>

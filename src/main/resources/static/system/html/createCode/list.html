@@ -1,0 +1,363 @@
+<!-- 
+	@describe: 代码生成列表
+	@author: 超级管理员 
+	@date: 2019-01-18 
+-->
+<!DOCTYPE html>
+<head>
+    <meta charset='utf-8'>
+    <title>代码生成列表</title>
+    <meta name='keywords' content=''/>
+    <meta name='description' content=''/>
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
+    <meta name='renderer' content='webkit'/>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'/>
+    <link rel='stylesheet' href='../../source/layui/css/layui.css' media='all'/>
+    <link rel='stylesheet' href='../../source/style/admin.css' media='all'/>
+</head>
+
+<body>
+<div class='layui-fluid'>
+    <div class='layui-card'>
+        <div class='layui-form layui-card-header layuiadmin-card-header-auto'>
+            <div class='layui-form-item'>
+                <div class="layui-inline">
+                    <label class='layui-form-label'>项目</label>
+                    <div class="layui-col-md6">
+                        <select name="projectId" id="projectId">
+                        </select>
+                    </div>
+                </div>
+                <div class='layui-inline'>
+                    <label class='layui-form-label'>作者</label>
+                    <div class='layui-input-block'>
+                        <input type='text' name='author' placeholder='请输入' autocomplete='off' class='layui-input'>
+                    </div>
+                </div>
+                <div class='layui-inline'>
+                    <label class='layui-form-label'>描述</label>
+                    <div class='layui-input-block'>
+                        <input type='text' name='describes' placeholder='请输入' autocomplete='off' class='layui-input'>
+                    </div>
+                </div>
+                <div class='layui-inline'>
+                    <label class='layui-form-label'>表名</label>
+                    <div class='layui-input-block'>
+                        <input type='text' name='tableName' placeholder='请输入' autocomplete='off' class='layui-input'>
+                    </div>
+                </div>
+                <div class='layui-inline'>
+                    <button class='layui-btn layuiadmin-btn' lay-submit lay-filter='LAY-search'>
+                        <i class='layui-icon layui-icon-search layuiadmin-button-btn'></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class='layui-card-body'>
+        <div id='layui-card-body-div-btn' style='padding-bottom: 10px;'></div>
+        <table id='LAY-table-list' lay-filter='LAY-table-list'></table>
+        <script type='text/html' id='table-tool-btn'></script>
+    </div>
+</div>
+<script src='../../source/layui/layui.js'></script>
+<script src='../../js/javaGuoJs/common.js'></script>
+<script>
+    layui.config({
+
+        base: '../../source/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'table', 'form'], function () {
+        var $ = layui.$
+            , form = layui.form
+            , table = layui.table
+            , admin = layui.admin
+            , actionUrl = '/system/createCode/'
+            , roleResourceName = '代码生成'
+            , projectSelectOption = '';
+
+        //进入界面成功后可执行的方法，可用于初始化一些数据
+        var successFunction =
+            {
+                addSuccess: function (layero, index) {
+                    //界面对象，用于获取界面中节点
+                    var $IC = layero.find('iframe').contents();
+                    $IC.find('#projectId').append(projectSelectOption);
+                    $IC.find('input[name="author"]').val(layui.data('memberInfo').info.username);
+                    $IC.find('input[name="userId"]').val(layui.data('memberInfo').info.id);
+                    form.render('select');
+                },
+                editSuccess: function (layero, index, obj) {
+                    console.log(obj);
+                    //界面对象，用于获取界面中节点
+                    var $IC = layero.find('iframe').contents();
+                    $IC.find('input[name="id"]').val(obj.data.id);
+                    $IC.find('input[name="author"]').val(obj.data.author);
+                    $IC.find('input[name="describes"]').val(obj.data.describes);
+                    $IC.find('input[name="tableName"]').val(obj.data.tableName);
+                    $IC.find('input[name="userId"]').val(obj.data.userId);
+                    $IC.find('#projectId').append(projectSelectOption);
+                    $IC.find('#projectId').val(obj.data.projectId);
+
+                    var tableKeyStrTemp = obj.data.tableKeyStr.split(',');
+                    var tableKeyTypeTemp = obj.data.tableKeyType.split(',');
+                    var tableKeyLengthTemp = obj.data.tableKeyLength.split(',');
+                    var valueStrTemp = obj.data.valueStr.split(',');
+
+                    var fieldParamList = [];
+                    for (var i = 0; i < tableKeyStrTemp.length; i++) {
+                        if (tableKeyStrTemp[i] == 'id' || tableKeyStrTemp[i] == 'create_time' || tableKeyStrTemp[i] == 'update_time' || tableKeyStrTemp[i] == 'is_deleted') continue;
+                        var fieldParam = {};
+                        fieldParam.tableKeyStr = tableKeyStrTemp[i];
+                        fieldParam.tableKeyType = tableKeyTypeTemp[i];
+                        fieldParam.tableKeyLength = tableKeyLengthTemp[i];
+                        fieldParam.valueStr = valueStrTemp[i];
+                        fieldParamList.push(fieldParam);
+                    }
+
+                    successFunction.editInitParam(fieldParamList, layero);
+
+                    form.render();
+                },
+                submitBefore: function (layero) {
+                    //界面对象，用于获取界面中节点
+                    var $IC = layero.find('iframe').contents();
+                    $IC.find('input[name="author"]').val(layui.data('memberInfo').info.username);
+                },
+                // Example：当common.js中公用方法需要重写时，重新写一下方法就好了，common.js那边会替换
+                add: function () {//添加
+                    layer.open({
+                        type: 2
+                        , title: '添加'
+                        , content: 'edit.html'
+                        , maxmin: true
+                        , area: ['90%', '90%']
+                        , btn: ['确定', '取消']
+                        , yes: function (index, layero) {
+                            successFunction['submitBefore'](layero);
+                            //界面对象，用于获取界面中节点
+                            var $IC = layero.find('iframe').contents();
+                            var iframeWindow = window['layui-layer-iframe' + index]
+                                , submitID = 'LAY-submit'
+                                , submit = layero.find('iframe').contents().find('#' + submitID);
+                            //监听提交
+                            iframeWindow.layui.form.on('submit(' + submitID + ')', function (data) {
+                                var tableKeyStr = '';
+                                var tableKeyStrTemp = $IC.find('input[name="tableKeyStr"]');
+                                for (var i = 0; i < tableKeyStrTemp.length; i++) {
+                                    tableKeyStr += $(tableKeyStrTemp[i]).val();
+                                    if (i != tableKeyStrTemp.length - 1) tableKeyStr += ',';
+                                }
+                                data.field.tableKeyStr = tableKeyStr;
+
+                                var tableKeyType = '';
+                                var tableKeyTypeTemp = $IC.find('input[name="tableKeyType"]');
+                                for (var i = 0; i < tableKeyTypeTemp.length; i++) {
+                                    tableKeyType += $(tableKeyTypeTemp[i]).val();
+                                    if (i != tableKeyTypeTemp.length - 1) tableKeyType += ',';
+                                }
+                                data.field.tableKeyType = tableKeyType;
+
+                                var tableKeyLength = '';
+                                var tableKeyLengthTemp = $IC.find('input[name="tableKeyLength"]');
+                                for (var i = 0; i < tableKeyLengthTemp.length; i++) {
+                                    tableKeyLength += $(tableKeyLengthTemp[i]).val();
+                                    if (i != tableKeyLengthTemp.length - 1) tableKeyLength += ',';
+                                }
+                                data.field.tableKeyLength = tableKeyLength;
+
+                                var valueStr = '';
+                                var valueStrTemp = $IC.find('input[name="valueStr"]');
+                                for (var i = 0; i < valueStrTemp.length; i++) {
+                                    valueStr += $(valueStrTemp[i]).val();
+                                    if (i != valueStrTemp.length - 1) valueStr += ',';
+                                }
+                                data.field.valueStr = valueStr;
+
+                                admin.req({
+                                    url: baseUrl + actionUrl + 'insert'
+                                    , type: 'post'
+                                    , data: data.field	//layui-form下的input
+                                    , done: function (res) {
+                                        table.reload('LAY-table-list'); //数据刷新
+                                        layer.close(index); //关闭弹层
+                                    }
+                                });
+                            });
+                            submit.trigger('click');
+                        }, success: function (layero, index) {
+                            successFunction['addSuccess'](layero, index);
+                        }
+                    });
+                },
+                // Example：当common.js中公用方法需要重写时，重新写一下方法就好了，common.js那边会替换
+                edit: function (obj) {//编辑
+                    layer.open({
+                        type: 2
+                        , title: '编辑'
+                        , content: 'edit.html'
+                        , maxmin: true
+                        , area: ['90%', '90%']
+                        , btn: ['确定', '取消']
+                        , yes: function (index, layero) {
+                            successFunction['submitBefore'](layero);
+                            //界面对象，用于获取界面中节点
+                            var $IC = layero.find('iframe').contents();
+                            var iframeWindow = window['layui-layer-iframe' + index]
+                                , submitID = 'LAY-submit'
+                                , submit = layero.find('iframe').contents().find('#' + submitID);
+                            //监听提交
+                            iframeWindow.layui.form.on('submit(' + submitID + ')', function (data) {
+                                var tableKeyStr = '';
+                                var tableKeyStrTemp = $IC.find('input[name="tableKeyStr"]');
+                                for (var i = 0; i < tableKeyStrTemp.length; i++) {
+                                    tableKeyStr += $(tableKeyStrTemp[i]).val();
+                                    if (i != tableKeyStrTemp.length - 1) tableKeyStr += ',';
+                                }
+                                data.field.tableKeyStr = tableKeyStr;
+
+                                var tableKeyType = '';
+                                var tableKeyTypeTemp = $IC.find('input[name="tableKeyType"]');
+                                for (var i = 0; i < tableKeyTypeTemp.length; i++) {
+                                    tableKeyType += $(tableKeyTypeTemp[i]).val();
+                                    if (i != tableKeyTypeTemp.length - 1) tableKeyType += ',';
+                                }
+                                data.field.tableKeyType = tableKeyType;
+
+                                var tableKeyLength = '';
+                                var tableKeyLengthTemp = $IC.find('input[name="tableKeyLength"]');
+                                for (var i = 0; i < tableKeyLengthTemp.length; i++) {
+                                    tableKeyLength += $(tableKeyLengthTemp[i]).val();
+                                    if (i != tableKeyLengthTemp.length - 1) tableKeyLength += ',';
+                                }
+                                data.field.tableKeyLength = tableKeyLength;
+
+                                var valueStr = '';
+                                var valueStrTemp = $IC.find('input[name="valueStr"]');
+                                for (var i = 0; i < valueStrTemp.length; i++) {
+                                    valueStr += $(valueStrTemp[i]).val();
+                                    if (i != valueStrTemp.length - 1) valueStr += ',';
+                                }
+                                data.field.valueStr = valueStr;
+
+                                admin.req({
+                                    url: baseUrl + actionUrl + 'updateById'
+                                    , type: 'post'
+                                    , data: data.field	//layui-form下的input
+                                    , done: function (res) {
+                                        table.reload('LAY-table-list'); //数据刷新
+                                        layer.close(index); //关闭弹层
+                                    }
+                                });
+                            });
+                            submit.trigger('click');
+                        }, success: function (layero, index) {
+                            successFunction['editSuccess'](layero, index,obj);
+                        }
+                    });
+                },
+                //加载项目信息
+                getProjectInfo: function () {
+                    //初始化项目列表
+                    admin.req({
+                        url: baseUrl + '/system/project/selectByUserId'
+                        , async: false
+                        , data: paramAddInfo({userId: layui.data('memberInfo').info.id})
+                        , done: function (res) {
+                            if ('0000000' == res.code) {
+                                var projectList = res.data.list;
+                                projectSelectOption += '<option value="">全部</option>';
+                                for (var i = 0; i < projectList.length; i++) {
+                                    projectSelectOption += '<option value="' + projectList[i].id + '">' + projectList[i].name + '</option>';
+                                }
+                                $('#projectId').append(projectSelectOption);
+                                form.render('select');
+                            } else {
+                                alert(res.msg);
+                            }
+                        }
+                    });
+                },
+                //编辑界面初始化字段
+                editInitParam: function (fieldParamList, layero) {
+                    //界面对象，用于获取界面中节点
+                    var $IC = layero.find('iframe').contents();
+                    var temp = '';
+                    for (var i = 0; i < fieldParamList.length; i++) {
+                        temp += '<tr>' + successFunction.getParamTdStr('tableKeyStr', fieldParamList[i].tableKeyStr)
+                            + successFunction.getParamTdStr('tableKeyType', fieldParamList[i].tableKeyType)
+                            + successFunction.getParamTdStr('tableKeyLength', fieldParamList[i].tableKeyLength)
+                            + successFunction.getParamTdStr('valueStr', fieldParamList[i].valueStr);
+                        temp += successFunction.getBtnTdStr() + '</tr>';
+                    }
+                    $IC.find('#paramTbody').append(temp);
+                },
+                /**获取参数td**/
+                getParamTdStr: function (name, value) {
+                    var valueTemp = '';
+                    if ('tableKeyType' == name) {
+                        valueTemp = 'varchar';
+                    } else if ('tableKeyLength' == name) {
+                        valueTemp = '20';
+                    }
+                    if (typeof value == "undefined" || value == null || value == "" || value == 'null') {
+                        value = valueTemp;
+                    }
+                    return "<td><input type='text' name='" + name + "' lay-verify='required' autocomplete='off' class='layui-input' value='" + value + "'></td>";
+                },
+                /**获取按钮td**/
+                getBtnTdStr: function () {
+                    return "<td align='center'><div class='layui-table-cell'><a class='layui-btn layui-btn-danger layui-btn-xs' data-type='delParam'>" +
+                        "<i class='layui-icon layui-icon-delete'></i>删除</a></div></tr>";
+                },
+                /**代码生成**/
+                print: function (obj) {
+                    location.href = baseUrl + '/system/createCode/createCodeZip?id=' + obj.data.id + '&token=' + layui.data('memberInfo').info.token;
+                }
+            };
+
+
+        //追加打印功能
+        var printBtn = '<a class="layui-btn layui-btn-xs" lay-event="print"><i class="layui-icon layui-icon-edit"></i>生成</a>';
+        $('#table-tool-btn').append(printBtn);
+
+        //表格初始化列表json参数
+        var tableRenderJson = {
+            elem: '#LAY-table-list'
+            , url: baseUrl + actionUrl + 'selectAllForLayUI'
+            , where: paramAddInfo({})
+            , cols: [[
+                {type: 'checkbox', fixed: 'left'}
+                , {
+                    title: '序号', width: '5%', templet: function (d) {
+                        return d.LAY_INDEX;
+                    }
+                }
+                , {field: 'createTime', title: '创建时间'}
+                , {field: 'author', title: '作者'}
+                , {field: 'describes', title: '描述'}
+                , {field: 'tableName', title: '表名'}
+                , {title: '操作', width: '15%', align: 'center', fixed: 'right', toolbar: '#table-tool-btn'}
+            ]]
+            , request: {pageName: 'offset', limitName: 'limit'}
+            , text: '对不起，加载出现异常！'
+            , page: true
+            , done: function () {
+                //获取项目列表信息
+                successFunction.getProjectInfo();
+            }
+        };
+
+        //初始化页面基础功能
+        initPageFunction($, form, table, admin, actionUrl, successFunction, roleResourceName, tableRenderJson, '90%', '90%');
+
+        //初始化列表数据
+        table.render(tableRenderJson);
+
+    });
+</script>
+</body>
+</html>
+

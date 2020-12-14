@@ -1,0 +1,30 @@
+projectName="springBoot"    #项目名称
+startClassPath="top.javaguo.Application"    #程序启动类路径
+startClassName="Application"    #程序启动类名字
+
+pid=$(jps|grep $startClassName|awk '{print $1}')    #程序pid
+
+#判断pid是否为数字，为数字则说明程序已经运行，则打印pid并退出
+if [ -n "$pid" ]; then
+    echo "The $projectName is running..."
+    echo "PID: $pid"
+    exit 0
+fi
+
+JAVA_OPTS="-server -Xms1024m -Xmx1024m -Xmn256m"   #启动参数，根据实际系统内存分配，Xms配置系统内存的50%，分配比例：Xms:Xmx:Xmn=4:4:1
+
+echo "$projectName starting..."
+
+echo "jvm params:$JAVA_OPTS"
+
+BASE_DIR=$(cd $(dirname $0)/..;pwd)
+  CLASSPATH=$BASE_DIR/classes:$BASE_DIR/config:$BASE_DIR
+  for jar in $BASE_DIR/lib/*.jar
+  do
+    CLASSPATH="$CLASSPATH:$jar"
+  done
+
+MYDATE=`date +%Y%m%d_%H%M%S`    #当前时间
+
+#启动
+java $JAVA_OPTS  -cp $CLASSPATH $startClassPath >../logs/$projectName${MYDATE}.log 2>&1 &  echo "$projectName has been started..."

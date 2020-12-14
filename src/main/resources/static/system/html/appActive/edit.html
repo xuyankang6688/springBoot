@@ -1,0 +1,87 @@
+<!-- 
+	@describe: 首页活动展示编辑
+	@author:  
+	@date: 2019-11-25 
+-->
+<!DOCTYPE html>
+<head>
+	<meta charset='utf-8'>
+	<title>首页活动展示编辑</title>
+	<meta name='keywords' content=''/>
+	<meta name='description' content='' />
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
+	<meta name='renderer' content='webkit'/>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'/>
+	<link rel='stylesheet' href='../../source/layui/css/layui.css' media='all'/>
+</head>
+
+<body>
+	<div class='layui-form' style='padding: 20px 0 0 0;'>
+		<input type='hidden' name='id' class='layui-input'>
+		<div class='layui-form-item'>
+			<label class='layui-form-label'>图片</label>
+			<div class='layui-input-inline' id='upload1'>
+				<img id="demo1" width="300px" height="200px" style="display: none;">
+				<div id="icon1">
+					<i class="layui-icon"></i>
+					<p>点击上传，或将文件拖拽到此处</p>
+				</div>
+				<input type='hidden' name='img' lay-verify='required' placeholder='请输入图片' autocomplete='off' class='layui-input'>
+			</div>
+		</div>
+		<div class='layui-form-item'>
+			<label class='layui-form-label'>活动类型</label>
+			<div class='layui-input-inline'>
+				<select id="type" name="type" lay-filter="aihao">
+					<option value="">请选择活动类型</option>
+					<option value="1">商品</option>
+					<option value="2">店铺</option>
+					<option value="3">外链</option>
+				</select>
+			</div>
+		</div>
+		<div class='layui-form-item'>
+			<label class='layui-form-label'>关联ID/跳转URL</label>
+			<div class='layui-input-inline'>
+				<input type='text' name='param' lay-verify='required' placeholder='请输入关联ID跳转URL' autocomplete='off' class='layui-input'>
+			</div>
+		</div>
+		<div class='layui-form-item layui-hide'>
+			<input type='button' lay-submit lay-filter='LAY-submit' id='LAY-submit' value='确认'>
+		</div>
+	</div>
+	<script src='../../source/layui/layui.js'></script>
+	<script>
+		layui.use(['upload','form'], function(){
+			var $ = layui.jquery
+					,form = layui.form
+					,upload = layui.upload;
+			//上传图片
+			upload.render({
+				elem: '#upload1'
+				,url: '/upload/uploadFile'
+				,accept:'file'
+				,acceptMime: 'jpg, png'
+				,before: function(obj){
+					$('#demo1').show();
+					$('#icon1').hide();
+					closeIndex = layer.load();
+					//预读本地文件示例，不支持ie8
+					obj.preview(function(index, file, result){
+						// $('#demo1').append('< img onclick="queryImg(this)" src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
+						$('#demo1').attr('src',result)
+					}) ;
+				}
+				,done: function(res){
+					//上传完毕
+					$("input[name='img']").val(res.data.uploadFilePath)
+					layer.close(closeIndex);
+				}
+			});
+		});
+
+
+
+	</script>
+</body>
+</html>

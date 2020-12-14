@@ -1,0 +1,18 @@
+echo "shutting down"
+
+projectName="springBoot"    #项目名称
+startClassName="Application"    #程序启动类名字
+
+#jps|grep Application：获取名字为Application的pid
+#awk '{print $1}'：获取当前内容(jps|grep Application获取的内容)的第一列值
+pid=$(jps|grep $startClassName|awk '{print $1}')
+
+#判断pid是否为数字，为数字则说明程序已经运行，则打印pid并退出
+if [ -n "$pid" ]; then
+    echo "killing pid $pid"
+    #杀死进程
+    kill $pid
+    echo "$projectName has been shutdown..."
+else
+    echo "$projectName is not running..."
+fi

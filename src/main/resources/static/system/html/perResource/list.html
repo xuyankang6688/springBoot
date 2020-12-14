@@ -1,0 +1,168 @@
+<!-- 
+	@describe: 权限资源
+	@author: javaGuo 
+	@date: 2018-09-18
+-->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>权限资源</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<link rel="stylesheet" href="../../source/layui/css/layui.css" media="all">
+	<link rel="stylesheet" href="../../source/style/admin.css" media="all">
+</head>
+<body>
+	<div class="layui-fluid">
+		<div class="layui-card">
+			<div class="layui-card-body">
+				<div id="layui-card-body-div-btn" style="padding-bottom: 10px;">
+					<button class="layui-btn layuiadmin-btn" data-type="showOrHideAll" id="showOrHideAllBtn">展开</button>
+				</div>
+				
+				<table id="LAY-table-list" lay-filter="LAY-table-list"></table>
+				<script type="text/html" id="table-tool-btn"></script>
+			</div>
+		</div>
+	</div>
+
+	<script src="../../source/layui/layui.js"></script> 
+	<script src="../../js/javaGuoJs/common.js"></script>
+	<script>
+		layui.config({
+			base: '../../source/' //静态资源所在路径
+		}).extend({
+			index: 'lib/index' //主入口模块
+		}).use(['index' , 'table' , 'form'], function(){
+			var $ = layui.$
+			,form = layui.form
+			,table = layui.table
+			,admin = layui.admin
+			,actionUrl = '/system/perResource/'
+			,roleResourceName = '用户'
+			,open = "展开"
+			,close = "关闭"
+			,width = '1000px'
+			,height = '800px';
+			
+			//进入界面成功后可执行的方法，可用于初始化一些数据
+			var successFunction = 
+			{
+				addSuccess: function(layero, index){
+				},
+				editSuccess: function(layero, index , obj){
+					//界面对象，用于获取界面中节点
+					var $IC = layero.find('iframe').contents();
+					$IC.find('input[name="id"]').val(obj.data.id);
+					$IC.find('input[name="resName"]').val(obj.data.resName);
+					$IC.find('input[name="resUrl"]').val(obj.data.resUrl);
+					$IC.find('input[name="resIntroduce"]').val(obj.data.resIntroduce);
+					$IC.find('input[name="resOrderNum"]').val(obj.data.resOrderNum);
+					$IC.find('input[name="menuLevel"]').val(obj.data.menuLevel);
+					$IC.find('input[name="parentIdTemp"]').val(obj.data.parentId);
+				},
+				submitBefore: function(layero){
+				},
+				showDownLevel: function(obj){//展开关闭下级资源
+					//获取obj在列表数据中的下标
+					var objIndex = obj.tr.selector.substring( obj.tr.selector.indexOf('"')+1 , obj.tr.selector.lastIndexOf('"') );
+					//当所选资源为二级菜单时不做处理
+					if(obj.data.menuLevel == 2) return;
+					//列表数据
+					var allData = table.cache['LAY-table-list'];
+					//循环标识一
+					var forFlagOne = 0;
+					//当前列showHideButton按钮对象
+					var showHideButton = $($(obj.tr.selector).find('.showHideButton'));
+					for(var i = objIndex ; i < allData.length ; i++){
+						if(allData[i].id == obj.data.id ) forFlagOne = 1;
+						//当遇到第二个同级资源时终止循环
+						if(forFlagOne == 2) return;
+						if(forFlagOne == 1 && allData[i].parentId == obj.data.id){
+							if(showHideButton.html() == open) $('.layui-table-body tr[data-index="'+i+'"]').show();
+							else {
+								$('.layui-table-body tr[data-index="'+i+'"]').hide();
+								$('.layui-table-body tr[data-index="'+i+'"]').find('.showHideButton').html('展开');
+							}
+							if(obj.data.menuLevel == 0 && showHideButton.html() == close){
+								//循环标识二
+								var forFlagTwo = 0;
+								for(var j = 0 ; j < allData.length ; j++){
+									if(allData[j].id == allData[i].id ) forFlagTwo = 1;
+									//当遇到第二个同级资源时终止循环
+									if(forFlagTwo == 2) return;
+									if(forFlagTwo == 1 && allData[j].parentId == allData[i].id){
+										if(showHideButton.html() == open) $('.layui-table-body tr[data-index="'+j+'"]').show();
+										else $('.layui-table-body tr[data-index="'+j+'"]').hide();
+									}
+								};
+							}
+						}
+					}
+					showHideButton.html(showHideButton.html() == open ? close:open);
+				},
+				showOrHideAll: function(){
+					var showOrHideAllBtn = $('#showOrHideAllBtn');
+					var type = 0 ;
+					if(showOrHideAllBtn.text() == '展开') type = 1 ; 
+					//列表数据
+					var allData = table.cache['LAY-table-list'];
+					for(var i = 0 ; i < allData.length ; i++){
+						if(allData[i].menuLevel != 0){
+							if(type == 0) $('.layui-table-body tr[data-index="'+i+'"]').hide();
+							else $('.layui-table-body tr[data-index="'+i+'"]').show();
+						}
+					}
+					showOrHideAllBtn.text( type == 0 ? '展开' : '关闭' );
+				}
+			};
+
+            //表格初始化列表json参数
+            var tableRenderJson = {
+                elem: '#LAY-table-list'
+                ,url:  baseUrl  + actionUrl + 'selectAllForLayUI'
+                ,headers : paramAddInfo({})
+                ,cols: [[
+                    {
+                        width:70, event: 'showDownLevel',
+                        templet : function(d){
+                            return d.menuLevel == 2 ? '' : '<a class="layui-btn layui-btn-xs'
+                                + (d.menuLevel == 0 ? '' : ' layui-btn-warm') + ' showHideButton">' + open + '</a>';
+                        }
+                    }
+                    ,{
+                        field: 'resName', title: '资源名称',
+                        templet : function(d){
+                            var temp = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                            return ( d.menuLevel == '0' ? '' : ( d.menuLevel == '1' ? temp : temp + temp ) ) + d.resName;
+                        }
+                    }
+                    ,{field: 'resUrl', title: '资源地址'}
+                    ,{field: 'resIntroduce', title: '资源介绍'}
+                    ,{title: '操作', width: 150, align:'center', fixed: 'right', toolbar: '#table-tool-btn'}
+                ]]
+                ,request : {pageName: 'offset',limitName: 'limit'}
+                ,text: '对不起，加载出现异常！'
+                ,limit: 9999
+                ,done: function(){
+                    //列表数据
+                    var allData = table.cache['LAY-table-list'];
+                    for(var i = 0 ; i < allData.length ; i++){
+                        if(allData[i].menuLevel != 0) $('.layui-table-body tr[data-index="'+i+'"]').hide();
+                    }
+                }
+            };
+
+            //初始化页面基础功能
+            initPageFunction($, form, table, admin, actionUrl, successFunction, roleResourceName, tableRenderJson);
+
+            //初始化列表数据
+            table.render(tableRenderJson);
+
+
+        });
+	</script>
+</body>
+</html>

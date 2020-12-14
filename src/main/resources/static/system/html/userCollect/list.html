@@ -1,0 +1,110 @@
+<!-- 
+	@describe: 收藏表列表
+	@author: admin 
+	@date: 2019-08-13 
+-->
+<!DOCTYPE html>
+<head>
+	<meta charset='utf-8'>
+	<title>收藏表列表</title>
+	<meta name='keywords' content=''/>
+	<meta name='description' content=''/>
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
+	<meta name='renderer' content='webkit'/>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'/>
+	<link rel='stylesheet' href='../../source/layui/css/layui.css' media='all'/>
+	<link rel='stylesheet' href='../../source/style/admin.css' media='all'/>
+</head>
+
+<body>
+	<div class='layui-fluid'>
+		<div class='layui-card'>
+			<div class='layui-form layui-card-header layuiadmin-card-header-auto'>
+				<div class='layui-form-item'>
+					<div class='layui-inline'>
+						<label class='layui-form-label'>商品id</label>
+						<div class='layui-input-block'>
+							<input type='text' name='goodsId' placeholder='请输入' autocomplete='off' class='layui-input'>
+						</div>
+					</div>
+					<div class='layui-inline'>
+						<label class='layui-form-label'>用户id</label>
+						<div class='layui-input-block'>
+							<input type='text' name='userId' placeholder='请输入' autocomplete='off' class='layui-input'>
+						</div>
+					</div>
+					<div class='layui-inline'>
+						<button class='layui-btn layuiadmin-btn' lay-submit lay-filter='LAY-search'>
+							<i class='layui-icon layui-icon-search layuiadmin-button-btn'></i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class='layui-card-body'>
+			<div id='layui-card-body-div-btn' style='padding-bottom: 10px;'></div>
+			<table id='LAY-table-list' lay-filter='LAY-table-list'></table>
+			<script type='text/html' id='table-tool-btn'></script>
+		</div>
+	</div>
+	<script src='../../source/layui/layui.js'></script>
+	<script src='../../js/javaGuoJs/common.js'></script>
+	<script>
+		layui.config({
+			base: '../../source/' //静态资源所在路径
+		}).extend({
+			index: 'lib/index' //主入口模块
+		}).use(['index' , 'table' , 'form'], function(){
+			var $ = layui.$
+			,form = layui.form
+			,table = layui.table
+			,admin = layui.admin
+			,actionUrl = '/system/userCollect/'
+			,roleResourceName = '收藏表';
+
+			//进入界面成功后可执行的方法，可用于初始化一些数据
+			var successFunction = 
+			{
+				addSuccess: function(layero, index){
+				},
+				editSuccess: function(layero, index , obj){
+					//界面对象，用于获取界面中节点
+					var $IC = layero.find('iframe').contents();
+					$IC.find('input[name="id"]').val(obj.data.id);
+					$IC.find('input[name="isDeleted"]').val(obj.data.isDeleted);
+					$IC.find('input[name="goodsId"]').val(obj.data.goodsId);
+					$IC.find('input[name="userId"]').val(obj.data.userId);
+				},
+				submitBefore: function(layero){
+				}
+			};
+
+			//表格初始化列表json参数
+			var tableRenderJson = {
+				elem: '#LAY-table-list'
+				,url:  baseUrl  + actionUrl + 'selectAllForLayUI'
+				,where : paramAddInfo({})
+				,cols: [[
+					{type: 'checkbox', fixed: 'left'}
+					,{title: '序号', width:70 , templet : function(d){return d.LAY_INDEX;}}
+					,{field: 'createTime', title: '创建时间'}
+					,{field: 'updateTime', title: '修改时间'}
+					,{field: 'goodsId', title: '商品id'}
+					,{field: 'userId', title: '用户id'}
+					,{title: '操作', width: 150, align:'center', fixed: 'right', toolbar: '#table-tool-btn'}
+				]]
+				,request : {pageName: 'offset',limitName: 'limit'}
+				,text: '对不起，加载出现异常！'
+				,page: true
+			};
+
+			//初始化页面基础功能
+			initPageFunction($ , form , table , admin , actionUrl , successFunction , roleResourceName , tableRenderJson);
+
+			//初始化列表数据
+			table.render(tableRenderJson);
+		});
+	</script>
+</body>
+</html>
+

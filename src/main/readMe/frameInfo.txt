@@ -1,0 +1,10 @@
+一、技术架构介绍
+    1: 架构组成
+       a: 框架 - springboot2.0.2
+       b: 数据库 - mybatis
+       c: 缓存 - spring cache + redis
+       d: 打包 - assembly
+       e: 安全验证 - HandlerInterceptor + sign + token + auth
+       f: 拦截 - WebMvcConfigurer
+       g: 日志 - springboot 默认日志 Logback
+       h：文件上传 - 阿里OSS

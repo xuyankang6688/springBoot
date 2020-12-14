@@ -1,0 +1,219 @@
+<!-- 
+	@describe: 代码生成编辑
+	@author: 超级管理员 
+	@date: 2019-01-18 
+-->
+<!DOCTYPE html>
+<head>
+    <meta charset='utf-8'>
+    <title>代码生成编辑</title>
+    <meta name='keywords' content=''/>
+    <meta name='description' content=''/>
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
+    <meta name='renderer' content='webkit'/>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'/>
+    <link rel='stylesheet' href='../../source/layui/css/layui.css' media='all'/>
+</head>
+
+<body>
+<div class='layui-form' style='padding: 20px 0 0 0;'>
+    <input type='hidden' name='id' class='layui-input'>
+    <input type='hidden' name='userId' class='layui-input'>
+    <div class="layui-form-item ">
+        <label class='layui-form-label'>项目</label>
+        <div class="layui-input-inline">
+            <select name="projectId" id="projectId" onclick="alert(1111);">
+            </select>
+        </div>
+    </div>
+    <div class='layui-form-item'>
+        <label class='layui-form-label'>作者</label>
+        <div class='layui-input-inline'>
+            <input type='text' name='author' lay-verify='required' placeholder='请输入作者' autocomplete='off'
+                   class='layui-input'>
+        </div>
+    </div>
+    <div class='layui-form-item'>
+        <label class='layui-form-label'>表名</label>
+        <div class='layui-input-inline'>
+            <input type='text' name='tableName' lay-verify='required' placeholder='请输入表名' autocomplete='off'
+                   class='layui-input'>
+        </div>
+    </div>
+    <div class='layui-form-item'>
+        <label class='layui-form-label'>描述</label>
+        <div class='layui-col-md4'>
+            <input type='text' name='describes' lay-verify='required' placeholder='请输入描述' autocomplete='off'
+                   class='layui-input'>
+        </div>
+    </div>
+    <div class='layui-form-item layui-hide'>
+        <input type='button' lay-submit lay-filter='LAY-submit' id='LAY-submit' value='确认'>
+    </div>
+    <div class="layui-table-box">
+        <div class="layui-table-body layui-table-main">
+            <table cellspacing="0" cellpadding="0" border="0" class="layui-table">
+                <thead>
+                <tr>
+                    <th width="20%">
+                        <div class="layui-table-cell"><span>字段名</span></div>
+                    </th>
+                    <th width="10%">
+                        <div class="layui-table-cell"><span>类型</span></div>
+                    </th>
+                    <th width="5%">
+                        <div class="layui-table-cell"><span>长度</span></div>
+                    </th>
+                    <th>
+                        <div class="layui-table-cell"><span>注释</span></div>
+                    </th>
+                    <th width="5%">
+                        <div class="layui-table-cell" align="center">
+                            <div class="layui-table-cell laytable-cell-1-6">
+                                <a class="layui-btn layui-btn-normal layui-btn-xs" data-type="addParam">
+                                    <i class="layui-icon layui-icon-add-1"></i>添加
+                                </a>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody id="paramTbody">
+                <tr>
+                    <td>
+                        <input type='text' name='tableKeyStr' lay-verify='required' autocomplete='off'
+                               class='layui-input' value='id'>
+                    </td>
+                    <td>
+                        <input type='text' name='tableKeyType' lay-verify='required' autocomplete='off'
+                               class='layui-input' value='varchar'>
+                    </td>
+                    <td>
+                        <input type='text' name='tableKeyLength' lay-verify='required' autocomplete='off'
+                               class='layui-input' value='18'>
+                    </td>
+                    <td>
+                        <input type='text' name='valueStr' lay-verify='required' autocomplete='off' class='layui-input'
+                               value='编号'>
+                    </td>
+                    <td align="center">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type='text' name='tableKeyStr' lay-verify='required' autocomplete='off'
+                               class='layui-input' value='create_time'>
+                    </td>
+                    <td>
+                        <input type='text' name='tableKeyType' lay-verify='required' autocomplete='off'
+                               class='layui-input' value='varchar'>
+                    </td>
+                    <td>
+                        <input type='text' name='tableKeyLength' lay-verify='required' autocomplete='off'
+                               class='layui-input' value='19'>
+                    </td>
+                    <td>
+                        <input type='text' name='valueStr' lay-verify='required' autocomplete='off' class='layui-input'
+                               value='创建时间'>
+                    </td>
+                    <td align="center">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type='text' name='tableKeyStr' lay-verify='required' autocomplete='off'
+                               class='layui-input' value='update_time'>
+                    </td>
+                    <td>
+                        <input type='text' name='tableKeyType' lay-verify='required' autocomplete='off'
+                               class='layui-input' value='varchar'>
+                    </td>
+                    <td>
+                        <input type='text' name='tableKeyLength' lay-verify='required' autocomplete='off'
+                               class='layui-input' value='19'>
+                    </td>
+                    <td>
+                        <input type='text' name='valueStr' lay-verify='required' autocomplete='off' class='layui-input'
+                               value='修改时间'>
+                    </td>
+                    <td align="center">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type='text' name='tableKeyStr' lay-verify='required' autocomplete='off'
+                               class='layui-input' value='is_deleted'>
+                    </td>
+                    <td>
+                        <input type='text' name='tableKeyType' lay-verify='required' autocomplete='off'
+                               class='layui-input' value='tinyint'>
+                    </td>
+                    <td>
+                        <input type='text' name='tableKeyLength' lay-verify='required' autocomplete='off'
+                               class='layui-input' value='1'>
+                    </td>
+                    <td>
+                        <input type='text' name='valueStr' lay-verify='required' autocomplete='off' class='layui-input'
+                               value='是否删除'>
+                    </td>
+                    <td align="center">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src='../../source/layui/layui.js'></script>
+<script>
+
+    layui.use('form', function () {
+        var $ = layui.$
+            , form = layui.form;
+        //封装功能方法
+        var active = {
+            //新增字段
+            addParam: function () {
+                var temp = '<tr>' + active.getParamTdStr('tableKeyStr') + active.getParamTdStr('tableKeyType') + active.getParamTdStr('tableKeyLength') + active.getParamTdStr('valueStr');
+                temp += active.getBtnTdStr() + '</tr>';
+                $('#paramTbody').append(temp);
+                //绑定事件
+                $('.layui-btn-danger').on('click', function () {
+                    active[$(this).data('type')] ? active[$(this).data('type')].call(this) : '';
+                });
+            },
+            //移除当前字段
+            delParam: function () {
+                $($($($(this).parent()).parent()).parent()).remove();
+            },
+            /**获取参数td**/
+            getParamTdStr: function (name, value) {
+                var valueTemp = '';
+                if ('tableKeyType' == name) {
+                    valueTemp = 'varchar';
+                } else if ('tableKeyLength' == name) {
+                    valueTemp = '20';
+                }
+                if (typeof value == "undefined" || value == null || value == "" || value == 'null') {
+                    value = valueTemp;
+                }
+                return "<td><input type='text' name='" + name + "' lay-verify='required' autocomplete='off' class='layui-input' value='" + value + "'></td>";
+            },
+            /**获取按钮td**/
+            getBtnTdStr: function () {
+                return "<td align='center'><div class='layui-table-cell'><a class='layui-btn layui-btn-danger layui-btn-xs' data-type='delParam'>" +
+                    "<i class='layui-icon layui-icon-delete'></i>删除</a></div></tr>";
+            }
+
+        };
+
+        //绑定事件
+        $('.layui-btn').on('click', function () {
+            active[$(this).data('type')] ? active[$(this).data('type')].call(this) : '';
+        });
+
+    })
+</script>
+</body>
+</html>

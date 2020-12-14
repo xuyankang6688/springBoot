@@ -1,0 +1,323 @@
+<!-- 
+	@describe: 用户表列表
+	@author: admin 
+	@date: 2019-08-13 
+-->
+<!DOCTYPE html>
+<head>
+	<meta charset='utf-8'>
+	<title>用户表列表</title>
+	<meta name='keywords' content=''/>
+	<meta name='description' content=''/>
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
+	<meta name='renderer' content='webkit'/>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'/>
+	<link rel='stylesheet' href='../../source/layui/css/layui.css' media='all'/>
+	<link rel='stylesheet' href='../../source/style/admin.css' media='all'/>
+</head>
+
+<body>
+	<div class='layui-fluid'>
+		<div class='layui-card'>
+			<div class='layui-form layui-card-header layuiadmin-card-header-auto'>
+				<div class='layui-form-item'>
+					<!-- <div class='layui-inline'>
+						<label class='layui-form-label'>账号</label>
+						<div class='layui-input-block'>
+							<input type='text' name='accountNumber' placeholder='请输入' autocomplete='off' class='layui-input'>
+						</div>
+					</div>
+					<div class='layui-inline'>
+						<label class='layui-form-label'>密码</label>
+						<div class='layui-input-block'>
+							<input type='text' name='password' placeholder='请输入' autocomplete='off' class='layui-input'>
+						</div>
+					</div>
+					<div class='layui-inline'>
+						<label class='layui-form-label'>姓名</label>
+						<div class='layui-input-block'>
+							<input type='text' name='name' placeholder='请输入' autocomplete='off' class='layui-input'>
+						</div>
+					</div>
+					<div class='layui-inline'>
+						<label class='layui-form-label'>手机号</label>
+						<div class='layui-input-block'>
+							<input type='text' name='phone' placeholder='请输入' autocomplete='off' class='layui-input'>
+						</div>
+					</div>
+					<div class='layui-inline'>
+						<label class='layui-form-label'>头像</label>
+						<div class='layui-input-block'>
+							<input type='text' name='head' placeholder='请输入' autocomplete='off' class='layui-input'>
+						</div>
+					</div>
+					<div class='layui-inline'>
+						<label class='layui-form-label'>昵称</label>
+						<div class='layui-input-block'>
+							<input type='text' name='nickName' placeholder='请输入' autocomplete='off' class='layui-input'>
+						</div>
+					</div>
+					<div class='layui-inline'>
+						<label class='layui-form-label'>用户身份（注册时多选）</label>
+						<div class='layui-input-block'>
+							<input type='text' name='identity' placeholder='请输入' autocomplete='off' class='layui-input'>
+						</div>
+					</div>
+					<div class='layui-inline'>
+						<label class='layui-form-label'>支付密码（是否需要）</label>
+						<div class='layui-input-block'>
+							<input type='text' name='payPassword' placeholder='请输入' autocomplete='off' class='layui-input'>
+						</div>
+					</div>
+					<div class='layui-inline'>
+						<label class='layui-form-label'>自我简介</label>
+						<div class='layui-input-block'>
+							<input type='text' name='synopsis' placeholder='请输入' autocomplete='off' class='layui-input'>
+						</div>
+					</div>
+					<div class='layui-inline'>
+						<label class='layui-form-label'>我的简历（H5页面应该是存放url）</label>
+						<div class='layui-input-block'>
+							<input type='text' name='myResume' placeholder='请输入' autocomplete='off' class='layui-input'>
+						</div>
+					</div>
+					<div class='layui-inline'>
+						<label class='layui-form-label'>资讯分类ID(行业资讯分类的ID集合)</label>
+						<div class='layui-input-block'>
+							<input type='text' name='newsTypeId' placeholder='请输入' autocomplete='off' class='layui-input'>
+						</div>
+					</div>
+					<div class='layui-inline'>
+						<label class='layui-form-label'>性别</label>
+						<div class='layui-input-block'>
+							<input type='text' name='sex' placeholder='请输入' autocomplete='off' class='layui-input'>
+						</div>
+					</div>
+					<div class='layui-inline'>
+						<button class='layui-btn layuiadmin-btn' lay-submit lay-filter='LAY-search'>
+							<i class='layui-icon layui-icon-search layuiadmin-button-btn'></i>
+						</button>
+					</div> -->
+				</div>
+			</div>
+		</div>
+		<div class='layui-card-body'>
+			<div id='layui-card-body-div-btn' style='padding-bottom: 10px;'></div>
+			<table id='LAY-table-list' lay-filter='LAY-table-list'></table>
+			<script type='text/html' id='table-tool-btn'></script>
+		</div>
+	</div>
+	<script src='../../source/layui/layui.js'></script>
+	<script src='../../js/javaGuoJs/common.js'></script>
+	<script>
+		layui.config({
+			base: '../../source/' //静态资源所在路径
+		}).extend({
+			index: 'lib/index' //主入口模块
+		}).use(['index' , 'table' , 'form'], function(){
+			var $ = layui.$
+			,form = layui.form
+			,table = layui.table
+			,admin = layui.admin
+			,actionUrl = '/system/appUser/'
+			,roleResourceName = '用户列表';
+
+			//进入界面成功后可执行的方法，可用于初始化一些数据
+			var successFunction = 
+			{
+				addSuccess: function(layero, index){
+				},
+				editSuccess: function(layero, index , obj){
+					//界面对象，用于获取界面中节点
+					var $IC = layero.find('iframe').contents();
+					var type;
+					$IC.find('input[name="transactionNumber"]').val(obj.data.transactionNumber);
+					if(obj.data.type=="1"){
+						type="个人"
+					}else if(obj.data.type=="2"){
+						type="车队"
+					}else if(obj.data.type=="3"){
+						type="企业"
+					}
+					$IC.find('input[name="type"]').val(type);
+					$IC.find('input[name="starRating"]').val(obj.data.starRating);
+					$IC.find('input[name="name"]').val(obj.data.name);
+					$IC.find('#demo3').show();
+					$IC.find('#icon3').hide();
+					$IC.find('#demo3').attr('src',obj.data.head);
+
+					$IC.find('#frontCardImg').show();
+					$IC.find('#icon3').hide();
+					$IC.find('#frontCardImg').attr('src',obj.data.head);
+
+					$IC.find('#reverseCardImg').show();
+					$IC.find('#icon3').hide();
+					$IC.find('#reverseCardImg').attr('src',obj.data.head);
+
+					$IC.find('#holdingCardImg').show();
+					$IC.find('#icon3').hide();
+					$IC.find('#holdingCardImg').attr('src',obj.data.head);
+
+					$IC.find('#driverCardImg').show();
+					$IC.find('#icon3').hide();
+					$IC.find('#driverCardImg').attr('src',obj.data.head);
+
+					var str = obj.data.companyUser.companysImg;
+					var strs= new Array(); //定义一数组
+					strs=str.split(","); //字符分割
+					for (i=0;i<strs.length ;i++ ){
+						if(strs[i])
+							$IC.find('#demo2').append('<td style="position:relative;"><img src="'+ strs[i] +'" width="300px" height="200px" class="add-img"></td>')
+					}
+
+
+
+					$IC.find('#BusinessLicenseImg').show();
+					$IC.find('#icon3').hide();
+					$IC.find('#BusinessLicenseImg').attr('src',obj.data.head);
+					$IC.find('input[name="phone"]').val(obj.data.phone);
+					$IC.find('input[name="idCard"]').val(obj.data.idCard);
+					$IC.find('input[name="registerTime"]').val(obj.data.registerTime);
+				},
+				submitBefore: function(layero){
+				}
+			};
+
+			//表格初始化列表json参数
+			var tableRenderJson = {
+				elem: '#LAY-table-list'
+				,url:  baseUrl  + actionUrl + 'selectAllForLayUI'
+				,where : paramAddInfo({})
+				,cols: [[
+					{type: 'checkbox', fixed: 'left'}
+
+				//	,{field: 'id', title: '用户id'}
+					,{field: 'accountNumber', title: '账号'}
+					,{field: 'type', title: '类型',templet:function(d){
+							//（1处理中，2处理完毕，3待处理）
+							if(d.type == "1"){
+								return "个人";
+							}else if(d.type == "2"){
+								return "车队";
+							}else if(d.type == "3"){
+								return "企业";
+							}
+						}}
+					,{field: 'name', title: '姓名'}
+					,{field: 'phone', title: '电话'}
+					,{field: 'carNumber', title: '车辆数'}
+					,{field: 'registerTime', title: '注册店铺'}
+					,{field: 'lastLoginTime', title: '最后登陆时间'}
+					,{title: '操作', width: 150, align:'center', fixed: 'right', toolbar: '#table-tool-btn'}
+				]]
+				,request : {pageName: 'offset',limitName: 'limit'}
+				,text: '对不起，加载出现异常！'
+				,page: true
+			};
+
+			//初始化页面基础功能
+			initPageFunction($ , form , table , admin , actionUrl , successFunction , roleResourceName , tableRenderJson);
+
+			//初始化列表数据
+			table.render(tableRenderJson);
+		});
+
+
+		/**
+		 *@describe: 列表对应页面功能初始化
+		 *@author: javaGuo
+		 *@date: 2018-09-11
+		 **/
+		function initPageFunction($, form, table, admin, actionUrl, successFunction, roleResourceName, tableRenderJson, width, height) {
+
+			//监听搜索，执行重载
+			form.on('submit(LAY-search)', function (data) {
+				tableRenderJson.headers = paramAddInfo();
+				tableRenderJson.where = paramAddInfo(data.field);
+				table.render(tableRenderJson);
+			});
+
+
+			//增删改权限
+			var addFlag = judgeRoleResource(roleResourceName + '新增');
+			var deleteFlag = judgeRoleResource(roleResourceName + '删除');
+			var editFlag = judgeRoleResource(roleResourceName + '编辑');
+
+			//增删改对应的按钮代码
+			var editBtn = '<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">查看详情</a>'
+			//var delBtn = '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>';
+			//var batchdel = '<button class="layui-btn layuiadmin-btn" data-type="batchdel">删除</button>';
+			//var addBtn = '<button class="layui-btn layuiadmin-btn" data-type="add">添加</button>';
+
+			//根据权限展开对应功能
+			var tableToolBtnContent = '';
+			var layuiCardBodyDivBtnContent = '';
+			if (editFlag) tableToolBtnContent += editBtn;
+			//if (deleteFlag) tableToolBtnContent += delBtn;
+			//if (addFlag) layuiCardBodyDivBtnContent += addBtn;
+			//if (deleteFlag) layuiCardBodyDivBtnContent += batchdel;
+			$('#table-tool-btn').append(tableToolBtnContent);
+			$('#layui-card-body-div-btn').append(layuiCardBodyDivBtnContent);
+
+			width = width ? width : '80%';
+			height = height ? height : '90%';
+
+			//封装功能方法
+			var active = {
+				 edit: function (obj) {//编辑
+					layer.open({
+						type: 2
+						, title: '详情'
+						, content: 'edit.html'
+						, maxmin: true
+						, area: [width, height]
+						//, btn: ['确定', '取消']
+						, yes: function (index, layero) {
+							successFunction['submitBefore'](layero);
+							var iframeWindow = window['layui-layer-iframe' + index]
+									, submitID = 'LAY-submit'
+									, submit = layero.find('iframe').contents().find('#' + submitID);
+							//监听提交
+							iframeWindow.layui.form.on('submit(' + submitID + ')', function (data) {
+								admin.req({
+									url: baseUrl + actionUrl + 'updateById'
+									, type: 'post'
+									, data: data.field	//layui-form下的input
+									, done: function (res) {
+										tableRenderJson.headers = paramAddInfo();
+										table.reload('LAY-table-list', tableRenderJson); //数据刷新
+										layer.close(index); //关闭弹层
+									}
+								});
+							});
+							submit.trigger('click');
+						}
+						, success: function (layero, index) {
+							successFunction['editSuccess'](layero, index, obj);
+						}
+					});
+				}
+			};
+
+			//把successFunction加入active
+			if (successFunction) $.each(successFunction, function (i, val) {
+				active[i] = val;
+			});
+
+			//绑定事件
+			$('.layui-btn.layuiadmin-btn').on('click', function () {
+				active[$(this).data('type')] ? active[$(this).data('type')].call(this) : '';
+			});
+
+			//监听LAY-table-list中事件并绑定方法
+			table.on('tool(LAY-table-list)', function (obj) {
+				$.each(active, function (key) {
+					if (obj.event === key) active[key](obj);
+				});
+			});
+
+		}
+	</script>
+</body>
+</html>
+

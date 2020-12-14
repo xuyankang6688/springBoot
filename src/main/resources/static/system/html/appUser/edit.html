@@ -1,0 +1,203 @@
+<!-- 
+	@describe: 用户表编辑
+	@author: admin 
+	@date: 2019-08-13 
+-->
+<!DOCTYPE html>
+<head>
+	<meta charset='utf-8'>
+	<title>用户表编辑</title>
+	<meta name='keywords' content=''/>
+	<meta name='description' content='' />
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
+	<meta name='renderer' content='webkit'/>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'/>
+	<link rel='stylesheet' href='../../source/layui/css/layui.css' media='all'/>
+</head>
+
+<body>
+<style type="text/css">
+
+	.layui-form-item .layui-input-inline {
+		float: left;
+		width: 190px;
+		margin-right: 0px;
+	}
+	.layui-form-item .layui-form-label {
+		background: #f5f5f5;
+	}
+table td{
+	border-left: 1px solid #eaeaea;
+	border-top: 1px solid #eaeaea;
+}
+
+	.title1{
+		width:100%;
+		height:60px;
+		background:#d2d2d2;
+		border: 1px solid #393d497d;
+	}
+	.title1 label{
+		margin-left: 21px;
+		line-height: 60px;
+		font-size: 17px;
+	}
+	.layui-upload-list div{
+		float: left;
+	}
+</style>
+	<div class='layui-form' style='padding: 20px 0 0 0;'>
+		<input type='hidden' name='id' class='layui-input'>
+		<table class='layui-form-item'   cellspacing = 0px cellpadding = 10px>
+			<tr>
+				<td rowspan="3" width="13%" align="center">
+					<img id="demo3" width="100%" height="11%" style="display: none;">
+				</td>
+			<td class='layui-form-label'><b>姓名</b></td>
+			<td class='layui-input-inline' >
+				<input type='text' name='name' readonly lay-verify='required'  placeholder='请输入账号' autocomplete='off' class='layui-input'>
+			</td>
+				<td class='layui-form-label'><b>手机号</b></td>
+			<td class='layui-input-inline'>
+				<input type='text' name='phone' readonly lay-verify='required' placeholder='请输入密码' autocomplete='off' class='layui-input'>
+			</td>
+				<td class='layui-form-label'><b>星级评分</b></td>
+				<td class='layui-input-inline'>
+				<input type='text' name='starRating' readonly lay-verify='required' placeholder='请输入密码' autocomplete='off' class='layui-input'>
+			</td>
+			</tr>
+
+			<tr>
+				<td class='layui-form-label'><b>身份证号</b></td>
+				<td class='layui-input-inline'>
+					<input type='text' name='idCard' readonly lay-verify='required' placeholder='请输入密码' autocomplete='off' class='layui-input'>
+				</td>
+				<td class='layui-form-label'><b>注册时间</b></td>
+				<td class='layui-input-inline'>
+					<input type='text' name='registerTime' readonly lay-verify='required' placeholder='请输入密码' autocomplete='off' class='layui-input'>
+				</td>
+			</tr>
+			<tr>
+
+				<td class='layui-form-label'><b>成交单数</b></td>
+				<td class='layui-input-inline'>
+					<input type='text' name='transactionNumber' readonly lay-verify='required' placeholder='请输入密码' autocomplete='off' class='layui-input'>
+				</td>
+				<td class='layui-form-label'><b>类型</b></td>
+				<td class='layui-input-inline'>
+					<input type='text' name='type' readonly lay-verify='required' placeholder='请输入密码' autocomplete='off' class='layui-input'>
+				</td>
+			</tr>
+		</table>
+
+		<div class="title1">
+			<label>实名认证信息</label>
+		</div>
+		<div class='layui-form-item' style="margin-top: 5px">
+			<tr>
+				<td><img id="frontCardImg" width="20%"   style="display: none;margin-left: 8px"></td>
+				<td><img id="reverseCardImg" width="20%" style="display: none;margin-left: 8px"></td>
+				<td><img id="holdingCardImg" width="20%" style="display: none;margin-left: 8px"></td>
+				<td><img id="driverCardImg" width="20%" style="display: none;margin-left: 8px"></td>
+			</tr>
+		</div>
+
+		<br>
+		<div class="title1">
+			<label>公司信息</label>
+		</div>
+		<table class='layui-form-item'   cellspacing = 0px cellpadding = 10px>
+			<tr>
+				<td rowspan="2" width="13%" align="center">
+					<img id="BusinessLicenseImg" width="100%" height="11%" style="display: none;">
+				</td>
+				<td class='layui-form-label' style="height: 50px"><b>公司名称</b></td>
+				<td class='layui-input-inline'>
+					<input type='text'  style="height: 67px" name='name' readonly lay-verify='required'  placeholder='请输入账号' autocomplete='off' class='layui-input'>
+				</td>
+				<td class='layui-form-label' style="height: 50px"><b>地址</b></td>
+				<td class='layui-input-inline'>
+					<input type='text'  style="height: 67px" name='phone' readonly lay-verify='required' placeholder='请输入密码' autocomplete='off' class='layui-input'>
+				</td>
+			</tr>
+			<tr>
+				<td class='layui-form-label' style="height: 50px"><b>电话</b></td>
+				<td class='layui-input-inline'>
+					<input type='text'  style="height: 67px" name='idCard' readonly lay-verify='required'  autocomplete='off' class='layui-input'>
+				</td>
+
+				<td class='layui-form-label' style="height: 50px"><b>11</b></td>
+				<td class='layui-input-inline'>
+					<input type='text' style="height: 67px" name='registerTime' readonly lay-verify='required'  autocomplete='off' class='layui-input'>
+				</td>
+			</tr>
+		</table>
+		<div class="title1">
+			<label>公司照片</label>
+		</div>
+
+		<div class='layui-form-item'>
+			<div class='layui-input-inline' id="">
+				<table class='layui-form-item'   cellspacing = 0px cellpadding = 10px>
+				<!--<blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;width:320px;">-->
+					<tr class="layui-upload-list" id="demo2"></tr>
+				</table>
+				<!--</blockquote>-->
+				<!--<input type='hidden' name='companysImg' lay-verify='required' placeholder='请输入商品图片' autocomplete='off' class='layui-input'>-->
+			</div>
+		</div>
+
+
+		<div class="title1">
+			<label>车辆信息</label>
+		</div>
+
+		<div style="margin-left: 10px">
+		<table class='layui-form-item'   cellspacing = 0px cellpadding = 10px>
+			<tr width="100%">
+				<th class='layui-form-label'><b>车头车牌号</b></th>
+				<td class='layui-input-inline'  >
+					<input type='text' name='name' readonly lay-verify='required'  placeholder='请输入账号' autocomplete='off' class='layui-input'>
+				</td>
+				<th class='layui-form-label'><b>挂车车牌号</b></th>
+				<td class='layui-input-inline'>
+					<input type='text' name='phone' readonly lay-verify='required' placeholder='请输入密码' autocomplete='off' class='layui-input'>
+				</td>
+			</tr>
+
+			<tr  width="100%">
+				<th class='layui-form-label'><b>核定载重(吨)</b></th>
+				<td class='layui-input-inline'>
+					<input type='text' name='idCard' readonly lay-verify='required' placeholder='请输入密码' autocomplete='off' class='layui-input'>
+				</td>
+				<th class='layui-form-label'><b>车型</b></th>
+				<td class='layui-input-inline'>
+					<input type='text' name='registerTime' readonly lay-verify='required' placeholder='请输入密码' autocomplete='off' class='layui-input'>
+				</td>
+			</tr>
+			<tr  width="100%">
+
+				<th class='layui-form-label'><b>车长</b></th>
+				<td class='layui-input-inline'>
+					<!--<input type='text' name='transactionNumber' readonly lay-verify='required' placeholder='请输入密码' autocomplete='off' class='layui-input'>-->
+				</td>
+				<th class='layui-form-label'><b>类型</b></th>
+				<td class='layui-input-inline'>
+					<input type='text' name='type' readonly lay-verify='required' placeholder='请输入密码' autocomplete='off' class='layui-input'>
+				</td>
+			</tr>
+		</table>
+		</div>
+
+
+
+
+
+		<div class='layui-form-item layui-hide'>
+			<input type='button' lay-submit lay-filter='LAY-submit' id='LAY-submit' value='确认'>
+		</div>
+	</div>
+	<script src='../../source/layui/layui.js'></script>
+	<script>layui.use('form')</script>
+</body>
+</html>
